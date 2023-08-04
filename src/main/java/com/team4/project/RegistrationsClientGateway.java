@@ -1,9 +1,11 @@
 package com.team4.project;
 
+import java.net.URI;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 
 @CrossOrigin
@@ -41,11 +44,16 @@ public class RegistrationsClientGateway {
 		
 	}
 	
+	//post a new Registration
 	@PostMapping
-	public void createRegistration(@RequestBody Registration r) {
-		
-		rt.postForObject("http://localhost:9002/gateway/registrations", r, Registration.class);
-		
+	public ResponseEntity<?> createRegistration(@RequestBody Registration r) {
+		RestTemplate rt = new RestTemplate();
+
+		ResponseEntity<Registration> response = rt.postForEntity("http://localhost:9002/gateway/registrations", r, Registration.class);
+
+		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(response.getBody().getId()).toUri();
+		ResponseEntity<?> responseEntity = ResponseEntity.created(location).build();
+		return responseEntity;
 	}
 	
 	@PutMapping("/{id}")
