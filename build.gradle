@@ -17,7 +17,7 @@ group = 'ClientGateway'
 
 description = "client gateway for team 4"
 
-mainClassName = "com.team4.project.ClientGateway"
+mainClassName = "com.team4.project.ClientGatewayApp"
 
 
 sourceCompatibility = 11

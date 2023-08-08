@@ -30,7 +30,7 @@ public class RegistrationsClientGateway {
 	@GetMapping
 	public List<Registration> getAll() {
 		
-		List registrations = rt.getForObject("http://localhost:9002/gateway/registrations", List.class);
+		List registrations = rt.getForObject("http://registration:9002/gateway/registrations", List.class);
 		System.out.println(registrations);
 		return registrations;
 	}
@@ -38,7 +38,7 @@ public class RegistrationsClientGateway {
 	@GetMapping("/{id}")
 	public Registration getById(@PathVariable String id) {
 		
-		Registration registration = rt.getForObject("http://localhost:9002/gateway/registrations/" + id, Registration.class);
+		Registration registration = rt.getForObject("http://registration:9002/gateway/registrations/" + id, Registration.class);
 		System.out.println(registration);
 		return registration;
 		
@@ -49,7 +49,7 @@ public class RegistrationsClientGateway {
 	public ResponseEntity<?> createRegistration(@RequestBody Registration r) {
 		RestTemplate rt = new RestTemplate();
 
-		ResponseEntity<Registration> response = rt.postForEntity("http://localhost:9002/gateway/registrations", r, Registration.class);
+		ResponseEntity<Registration> response = rt.postForEntity("http://registration:9002/gateway/registrations", r, Registration.class);
 
 		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(response.getBody().getId()).toUri();
 		ResponseEntity<?> responseEntity = ResponseEntity.created(location).build();
@@ -59,13 +59,13 @@ public class RegistrationsClientGateway {
 	@PutMapping("/{id}")
 	public void updateRegistrationById(@RequestBody Registration r, @PathVariable String id) {
 		
-		rt.put("http://localhost:9002/gateway/registrations/" + id, r);
+		rt.put("http://registration:9002/gateway/registrations/" + id, r);
 	}
 	
 	@DeleteMapping("/{id}")
 	public void deleteById(@PathVariable String id) {
 		
-		rt.delete("http://localhost:9002/gateway/registrations/" + id);
+		rt.delete("http://registration:9002/gateway/registrations/" + id);
 	}
 
 }
