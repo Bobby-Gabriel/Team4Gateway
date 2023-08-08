@@ -1,16 +1,19 @@
 package com.team4.project;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
-
-
-@Document(collection="CUSTOMERS")
+@Entity
+@Table(name="CUSTOMERS")
 public class Customer {
 	
 	@Id
-	private String id;
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	private long id;
 	
 	private String name, email, password;
 
@@ -48,12 +51,13 @@ public class Customer {
 		this.password = password;
 	}
 
-	public void setId(String id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 
-	public String getId() {
+	public long getId() {
 		return id;
 	}
+
 
 }

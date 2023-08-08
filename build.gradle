@@ -33,24 +33,12 @@ repositories {
 
 dependencies {
  
-    compile group: 'org.springframework.boot', name: 'spring-boot-gradle-plugin', version:'2.1.3.RELEASE'
-    compile group: 'org.springframework.boot', name: 'spring-boot-gradle-plugin', version:'2.1.3.RELEASE'
-    compile group: 'org.springframework.data', name: 'spring-data-commons', version: '2.1.3.RELEASE'
-    compile group: 'org.springframework.data', name: 'spring-data-mongodb', version: '2.1.3.RELEASE'
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version:'2.1.3.RELEASE'
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-actuator', version:'2.1.3.RELEASE'
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-rest', version:'2.1.3.RELEASE'
-    testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test', version:'2.1.3.RELEASE' 
-   
-    compile group: 'javax.xml.bind', name: 'jaxb-api', version:'2.3.1'
-    compile group: 'javax.activation', name: 'activation', version:'1.1.1'
-    compile group: 'com.auth0', name: 'java-jwt', version:'3.8.1' 
-    compile group: 'org.json', name: 'json', version:'20180813'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version:'2.1.8.RELEASE'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-thymeleaf', version:'2.1.8.RELEASE'
     compile group: 'org.hsqldb', name: 'hsqldb', version:'2.4.1'
-    compile(group: 'mysql', name: 'mysql-connector-java', version:'8.0.15') { exclude(module: 'protobuf-java')}
-    compile group: 'io.opentracing.contrib', name: 'opentracing-spring-web-autoconfigure', version:'0.0.2'
-    compile group: 'com.uber.jaeger', name: 'jaeger-core', version:'0.18.0'
-    compile group: 'io.micrometer', name: 'micrometer-registry-prometheus', version:'1.1.3'
-    compile group:  'org.springframework.data', name: 'spring-data-commons', version: '2.1.13.RELEASE'
- 
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version:'2.1.8.RELEASE'
+    
+    compile(group: 'mysql', name: 'mysql-connector-java', version:'8.0.16') { exclude(module: 'protobuf-java')}
+    
+    runtime "mysql:mysql-connector-java:8.0.15"
 }
