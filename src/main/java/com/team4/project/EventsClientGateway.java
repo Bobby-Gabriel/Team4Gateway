@@ -30,7 +30,7 @@ public class EventsClientGateway {
 		
 		RestTemplate rt = new RestTemplate();
 		List events = rt.getForObject(
-				"http://localhost:9000/gateway/events", 
+				"http://event:9000/gateway/events", 
 				List.class);
 		
 		System.out.println(events);
@@ -44,7 +44,7 @@ public class EventsClientGateway {
 		
 		RestTemplate rt = new RestTemplate();
 		Event event = rt.getForObject(
-				"http://localhost:9000/gateway/events/" + id, Event.class);
+				"http://event:9000/gateway/events/" + id, Event.class);
 		
 		System.out.println(event);
 		
@@ -56,7 +56,7 @@ public class EventsClientGateway {
 	public ResponseEntity<?> createEvent(@RequestBody Event e) {
 		RestTemplate rt = new RestTemplate();
 
-		ResponseEntity<Event> response = rt.postForEntity("http://localhost:9000/gateway/events", e, Event.class);
+		ResponseEntity<Event> response = rt.postForEntity("http://event:9000/gateway/events", e, Event.class);
 
 		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(response.getBody().getId()).toUri();
 		ResponseEntity<?> responseEntity = ResponseEntity.created(location).build();
@@ -67,7 +67,7 @@ public class EventsClientGateway {
 	@PutMapping("/{id}")
 	public ResponseEntity<?> updateEventById(@RequestBody Event e, @PathVariable String id) {
 		RestTemplate rt = new RestTemplate();
-		rt.put("http://localhost:9000/gateway/events/" + id, e);
+		rt.put("http://event:9000/gateway/events/" + id, e);
 		
 		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(e.getId()).toUri();
 		ResponseEntity<?> responseEntity = ResponseEntity.created(location).build();
@@ -78,7 +78,7 @@ public class EventsClientGateway {
 	public ResponseEntity<?> deleteById(@PathVariable String id){
 		
 		RestTemplate rt = new RestTemplate();
-		rt.delete("http://localhost:9000/gateway/events/" + id);
+		rt.delete("http://event:9000/gateway/events/" + id);
 		return ResponseEntity.ok().build();
 		
 	}

@@ -25,12 +25,13 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 @RequestMapping("/api/customers")
 public class CustomersClientGateway {
 
+
 	@GetMapping
 	public List<Customer> getAll(){
 		
 		RestTemplate rt = new RestTemplate();
 		List customers = rt.getForObject(
-				"http://localhost:9001/gateway/customers", 
+				"http://customer:9001/gateway/customers",
 				List.class);
 		
 		System.out.println(customers);
@@ -43,7 +44,7 @@ public class CustomersClientGateway {
 		
 		RestTemplate rt = new RestTemplate();
 		Customer customer = rt.getForObject(
-				"http://localhost:9001/gateway/customers/" + id, Customer.class);
+				"http://customer:9001/gateway/customers/" + id, Customer.class);
 		
 		System.out.println(customer);
 		
@@ -55,7 +56,7 @@ public class CustomersClientGateway {
 	public ResponseEntity<?> createCustomer(@RequestBody Customer c) {
 		RestTemplate rt = new RestTemplate();
 
-		ResponseEntity<Customer> response = rt.postForEntity("http://localhost:9001/gateway/customers", c, Customer.class);
+		ResponseEntity<Customer> response = rt.postForEntity("http://customer:9001/gateway/customers", c, Customer.class);
 
 		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(response.getBody().getId()).toUri();
 		ResponseEntity<?> responseEntity = ResponseEntity.created(location).build();
@@ -65,14 +66,14 @@ public class CustomersClientGateway {
 	@PutMapping("/{id}")
 	public void updateCustomerById(@RequestBody Customer c, @PathVariable String id) {
 		RestTemplate rt = new RestTemplate();
-		rt.put("http://localhost:9001/gateway/customers/" + id, c);
+		rt.put("http://customer:9001/gateway/customers/" + id, c);
 	}
 	
 	@DeleteMapping("/{id}")
 	public void deleteById(@PathVariable String id){
 		
 		RestTemplate rt = new RestTemplate();
-		rt.delete("http://localhost:9001/gateway/customers/" + id);
+		rt.delete("http://customer:9001/gateway/customers/" + id);
 		
 	}
 	
@@ -82,7 +83,7 @@ public class CustomersClientGateway {
 	public Customer getCustomerByName(@PathVariable String username) {
 				
 		RestTemplate rt = new RestTemplate();
-		return rt.getForObject("http://localhost:9001/gateway/customers/byname/" + username, Customer.class);
+		return rt.getForObject("http://customer:9001/gateway/customers/byname/" + username, Customer.class);
 		
 	}
 		
@@ -91,7 +92,7 @@ public class CustomersClientGateway {
 	public Customer getCustomerByNamePost(@RequestBody String customerName){
 		
 		RestTemplate rt = new RestTemplate();
-		return rt.postForObject("http://localhost:9001/gateway/customers/byname", customerName, Customer.class);
+		return rt.postForObject("http://customer:9001/gateway/customers/byname", customerName, Customer.class);
 		
 	}
 }
