@@ -20,8 +20,8 @@ description = "client gateway for team 4"
 mainClassName = "com.team4.project.ClientGatewayApp"
 
 
-sourceCompatibility = 11
-targetCompatibility = 11
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
 
 repositories {
 
