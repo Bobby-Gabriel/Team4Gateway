@@ -1,13 +1,18 @@
 package com.team4.project;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
-@Document(collection = "REGISTRATIONS")
+@Entity
+@Table(name = "REGISTRATIONS")
 public class Registration {
 
 	@Id
-	private String id;
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	private long id;
 	
 	private String event_id, customer_id, notes;
 	private java.util.Date registration_date;
@@ -23,11 +28,11 @@ public class Registration {
 		this.notes = notes;
 	}
 
-	public void setId(String id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 	
-	public String getId() {
+	public long getId() {
 		return id;
 	}
 
