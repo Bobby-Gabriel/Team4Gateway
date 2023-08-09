@@ -15,16 +15,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class AuthFilter implements Filter {
 
+	
 	JWTUtil jwtUtil = new JWTHelper();
-
-	@Override
-	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
-			throws IOException, ServletException {
-		// TODO Auto-generated method stub
-		
-	}
-
-	/*
+	
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
@@ -32,16 +25,17 @@ public class AuthFilter implements Filter {
 		HttpServletRequest req = (HttpServletRequest) request;
 		HttpServletResponse res = (HttpServletResponse) response;
 		String uri = req.getRequestURI();
-		if (uri.startsWith("/gateway")) {
+		if (uri.startsWith("/api/")) {
 			System.out.println("Checking the header");
 			// continue on to get-token endpoint
 			String authheader = req.getHeader("authorization");
-			if (authheader != null && authheader.length() > 7 && authheader.startsWith("Bearer")) {
-				String jwt_token = authheader.substring(7, authheader.length());
-				if (jwtUtil.verifyToken(jwt_token)) {
+			System.out.println(authheader);
+			if (authheader != null && authheader.length() > 20 && authheader.startsWith("Bearer")) {
+				//String jwt_token = authheader.substring(7, authheader.length());
+				//if (jwtUtil.verifyToken(jwt_token)) {
 					chain.doFilter(request, response);
 					return;
-				}
+				//}
 			}
 		}
 
@@ -55,5 +49,7 @@ public class AuthFilter implements Filter {
 		res.sendError(HttpServletResponse.SC_FORBIDDEN, "failed authentication");
 
 	}
-	*/
+	
+	
+	
 }
