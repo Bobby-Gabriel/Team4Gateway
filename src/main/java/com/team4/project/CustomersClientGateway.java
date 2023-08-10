@@ -3,8 +3,6 @@ package com.team4.project;
 import java.net.URI;
 import java.util.List;
 
-import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -14,7 +12,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -25,56 +22,40 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 @RequestMapping("/api/customers")
 public class CustomersClientGateway {
 
+	private static final RestTemplate rt = new RestTemplate();
 
 	@GetMapping
-	public List<Customer> getAll(){
-		
-		RestTemplate rt = new RestTemplate();
-		List customers = rt.getForObject(
-				"http://localhost:9001/gateway/customers",
-				List.class);
-		
-		System.out.println(customers);
-		
-		return customers;
+	public List getAll(){
+
+		return rt.getForObject("http://localhost:9001/gateway/customers", List.class);
 	}
 	
 	@GetMapping("/{id}")
 	public Customer getById(@PathVariable String id){
-		
-		RestTemplate rt = new RestTemplate();
-		Customer customer = rt.getForObject(
-				"http://localhost:9001/gateway/customers/" + id, Customer.class);
-		
-		System.out.println(customer);
-		
-		return customer;
+
+		return rt.getForObject("http://localhost:9001/gateway/customers/" + id, Customer.class);
 	}
 	
 	//post a new Customer
 	@PostMapping
 	public ResponseEntity<?> createCustomer(@RequestBody Customer c) {
-		RestTemplate rt = new RestTemplate();
 
 		ResponseEntity<Customer> response = rt.postForEntity("http://localhost:9001/gateway/customers", c, Customer.class);
-
 		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(response.getBody().getId()).toUri();
-		ResponseEntity<?> responseEntity = ResponseEntity.created(location).build();
-		return responseEntity;
+
+		return ResponseEntity.created(location).build();
 	}
 	
 	@PutMapping("/{id}")
 	public void updateCustomerById(@RequestBody Customer c, @PathVariable String id) {
-		RestTemplate rt = new RestTemplate();
+
 		rt.put("http://localhost:9001/gateway/customers/" + id, c);
 	}
 	
 	@DeleteMapping("/{id}")
 	public void deleteById(@PathVariable String id){
 		
-		RestTemplate rt = new RestTemplate();
 		rt.delete("http://localhost:9001/gateway/customers/" + id);
-		
 	}
 	
 	
@@ -82,17 +63,13 @@ public class CustomersClientGateway {
 	@GetMapping("/byname/{username}")
 	public Customer getCustomerByName(@PathVariable String username) {
 				
-		RestTemplate rt = new RestTemplate();
 		return rt.getForObject("http://customer:9001/gateway/customers/byname/" + username, Customer.class);
-		
 	}
 		
 
 	@PostMapping(path = "/byname")
 	public Customer getCustomerByNamePost(@RequestBody String customerName){
 		
-		RestTemplate rt = new RestTemplate();
 		return rt.postForObject("http://customer:9001/gateway/customers/byname", customerName, Customer.class);
-		
 	}
 }

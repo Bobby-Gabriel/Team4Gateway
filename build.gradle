@@ -33,13 +33,13 @@ repositories {
 
 dependencies {
  
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version:'2.1.8.RELEASE'
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-thymeleaf', version:'2.1.8.RELEASE'
-    compile group: 'org.hsqldb', name: 'hsqldb', version:'2.4.1'
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version:'2.1.8.RELEASE'
-    compile group: 'com.auth0', name: 'java-jwt', version:'3.8.1'
-    
-    compile(group: 'mysql', name: 'mysql-connector-java', version:'8.0.16') { exclude(module: 'protobuf-java')}
-    
-    runtime "mysql:mysql-connector-java:8.0.15"
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-web', version:'2.1.8.RELEASE'
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-thymeleaf', version:'2.1.8.RELEASE'
+    implementation group: 'org.hsqldb', name: 'hsqldb', version:'2.4.1'
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version:'2.1.8.RELEASE'
+    implementation group: 'com.auth0', name: 'java-jwt', version:'3.8.1'
+
+    implementation(group: 'mysql', name: 'mysql-connector-java', version:'8.0.16') { exclude(module: 'protobuf-java')}
+
+    runtimeOnly "mysql:mysql-connector-java:8.0.15"
 }
