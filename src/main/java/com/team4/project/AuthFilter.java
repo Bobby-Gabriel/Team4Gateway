@@ -15,7 +15,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class AuthFilter implements Filter {
 
-	
 	JWTUtil jwtUtil = new JWTHelper();
 	
 	@Override
@@ -49,7 +48,5 @@ public class AuthFilter implements Filter {
 		res.sendError(HttpServletResponse.SC_FORBIDDEN, "failed authentication");
 
 	}
-	
-	
-	
+
 }

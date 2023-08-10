@@ -3,9 +3,6 @@ package com.team4.project;
 import java.net.URI;
 import java.util.List;
 
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -24,62 +21,47 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 @RequestMapping("/api/events")
 public class EventsClientGateway {
 
+	private static final RestTemplate rt = new RestTemplate();
+
 	//get all
 	@GetMapping
-	public List<Event> getAll(){
-		
-		RestTemplate rt = new RestTemplate();
-		List events = rt.getForObject(
-				"http://event:9000/gateway/events", 
-				List.class);
-		
-		System.out.println(events);
-		
-		return events;
+	public List getAll(){
+
+		return rt.getForObject("http://event:9000/gateway/events", List.class);
 	}
 	
 	//get by id
 	@GetMapping("/{id}")
 	public Event getById(@PathVariable String id){
-		
-		RestTemplate rt = new RestTemplate();
-		Event event = rt.getForObject(
-				"http://event:9000/gateway/events/" + id, Event.class);
-		
-		System.out.println(event);
-		
-		return event;
+
+		return rt.getForObject("http://event:9000/gateway/events/" + id, Event.class);
 	}
 	
 	//post a new event
 	@PostMapping
 	public ResponseEntity<?> createEvent(@RequestBody Event e) {
-		RestTemplate rt = new RestTemplate();
-
-		ResponseEntity<Event> response = rt.postForEntity("http://event:9000/gateway/events", e, Event.class);
-
+		
+    ResponseEntity<Event> response = rt.postForEntity("http://event:9000/gateway/events", e, Event.class);
 		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(response.getBody().getId()).toUri();
-		ResponseEntity<?> responseEntity = ResponseEntity.created(location).build();
-		return responseEntity;
+
+		return ResponseEntity.created(location).build();
 	}
 	
 	//put by id
 	@PutMapping("/{id}")
 	public ResponseEntity<?> updateEventById(@RequestBody Event e, @PathVariable String id) {
-		RestTemplate rt = new RestTemplate();
+
 		rt.put("http://event:9000/gateway/events/" + id, e);
-		
 		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(e.getId()).toUri();
-		ResponseEntity<?> responseEntity = ResponseEntity.created(location).build();
-		return responseEntity;
+
+		return ResponseEntity.created(location).build();
 	}
 	
 	@DeleteMapping("/{id}")
 	public ResponseEntity<?> deleteById(@PathVariable String id){
 		
-		RestTemplate rt = new RestTemplate();
 		rt.delete("http://event:9000/gateway/events/" + id);
+
 		return ResponseEntity.ok().build();
-		
 	}
 }
