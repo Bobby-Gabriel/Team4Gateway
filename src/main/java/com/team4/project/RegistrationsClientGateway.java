@@ -27,20 +27,20 @@ public class RegistrationsClientGateway {
 	@GetMapping
 	public List getAll() {
 
-		return rt.getForObject("http://localhost:9002/gateway/registrations", List.class);
+		return rt.getForObject("http://registration:9002/gateway/registrations", List.class);
 	}
 	
 	@GetMapping("/{id}")
 	public Registration getById(@PathVariable String id) {
 
-		return rt.getForObject("http://localhost:9002/gateway/registrations/" + id, Registration.class);
+		return rt.getForObject("http://registration:9002/gateway/registrations/" + id, Registration.class);
 	}
 	
 	//post a new Registration
 	@PostMapping
 	public ResponseEntity<?> createRegistration(@RequestBody Registration r) {
 
-		ResponseEntity<Registration> response = rt.postForEntity("http://localhost:9002/gateway/registrations", r, Registration.class);
+		ResponseEntity<Registration> response = rt.postForEntity("http://registration:9002/gateway/registrations", r, Registration.class);
 		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(response.getBody().getId()).toUri();
 
 		return ResponseEntity.created(location).build();
@@ -49,13 +49,13 @@ public class RegistrationsClientGateway {
 	@PutMapping("/{id}")
 	public void updateRegistrationById(@RequestBody Registration r, @PathVariable String id) {
 		
-		rt.put("http://localhost:9002/gateway/registrations/" + id, r);
+		rt.put("http://registration:9002/gateway/registrations/" + id, r);
 	}
 	
 	@DeleteMapping("/{id}")
 	public void deleteById(@PathVariable String id) {
 		
-		rt.delete("http://localhost:9002/gateway/registrations/" + id);
+		rt.delete("http://registration:9002/gateway/registrations/" + id);
 	}
 
 }
