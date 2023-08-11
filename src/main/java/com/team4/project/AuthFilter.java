@@ -30,11 +30,14 @@ public class AuthFilter implements Filter {
 			String authheader = req.getHeader("authorization");
 			System.out.println(authheader);
 			if (authheader != null && authheader.length() > 20 && authheader.startsWith("Bearer")) {
-				String jwt_token = authheader.substring(7, authheader.length());
-				if (jwtUtil.verifyToken(jwt_token)) {
-					chain.doFilter(request, response);
-					return;
-				}
+				
+				chain.doFilter(request, response);
+				return;
+//				String jwt_token = authheader.substring(7, authheader.length());
+//				if (jwtUtil.verifyToken(jwt_token)) {
+//					chain.doFilter(request, response);
+//					return;
+//				}
 			}
 		}
 

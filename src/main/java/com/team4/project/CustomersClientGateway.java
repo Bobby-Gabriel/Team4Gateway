@@ -27,20 +27,20 @@ public class CustomersClientGateway {
 	@GetMapping
 	public List getAll(){
 
-		return rt.getForObject("http://18.188.12.86:9001/gateway/customers", List.class);
+		return rt.getForObject("http://localhost:9001/gateway/customers", List.class);
 	}
 	
 	@GetMapping("/{id}")
 	public Customer getById(@PathVariable String id){
 
-		return rt.getForObject("http://18.188.12.86:9001/gateway/customers/" + id, Customer.class);
+		return rt.getForObject("http://localhost:9001/gateway/customers/" + id, Customer.class);
 	}
 	
 	//post a new Customer
 	@PostMapping
 	public ResponseEntity<?> createCustomer(@RequestBody Customer c) {
 
-		ResponseEntity<Customer> response = rt.postForEntity("http://18.188.12.86:9001/gateway/customers", c, Customer.class);
+		ResponseEntity<Customer> response = rt.postForEntity("http://localhost:9001/gateway/customers", c, Customer.class);
 		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(response.getBody().getId()).toUri();
 
 		return ResponseEntity.created(location).build();
@@ -49,13 +49,13 @@ public class CustomersClientGateway {
 	@PutMapping("/{id}")
 	public void updateCustomerById(@RequestBody Customer c, @PathVariable String id) {
 
-		rt.put("http://18.188.12.86:9001/gateway/customers/" + id, c);
+		rt.put("http://localhost:9001/gateway/customers/" + id, c);
 	}
 	
 	@DeleteMapping("/{id}")
 	public void deleteById(@PathVariable String id){
 
-		rt.delete("http://18.188.12.86:9001/gateway/customers/" + id);
+		rt.delete("http://localhost:9001/gateway/customers/" + id);
 	}
 	
 	
@@ -63,13 +63,13 @@ public class CustomersClientGateway {
 	@GetMapping("/byname/{username}")
 	public Customer getCustomerByName(@PathVariable String username) {
 				
-		return rt.getForObject("http://18.188.12.86:9001/gateway/customers/byname/" + username, Customer.class);
+		return rt.getForObject("http://localhost:9001/gateway/customers/byname/" + username, Customer.class);
 	}
 		
 
 	@PostMapping(path = "/byname")
 	public Customer getCustomerByNamePost(@RequestBody String customerName){
 		
-		return rt.postForObject("http://18.188.12.86:9001/gateway/customers/byname", customerName, Customer.class);
+		return rt.postForObject("http://localhost:9001/gateway/customers/byname", customerName, Customer.class);
 	}
 }

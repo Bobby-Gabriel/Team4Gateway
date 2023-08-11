@@ -27,21 +27,21 @@ public class EventsClientGateway {
 	@GetMapping
 	public List getAll(){
 
-		return rt.getForObject("http://18.216.173.254:9000/gateway/events", List.class);
+		return rt.getForObject("http://localhost:9000/gateway/events", List.class);
 	}
 	
 	//get by id
 	@GetMapping("/{id}")
 	public Event getById(@PathVariable String id){
 
-		return rt.getForObject("http://18.216.173.254:9000/gateway/events/" + id, Event.class);
+		return rt.getForObject("http://localhost:9000/gateway/events/" + id, Event.class);
 	}
 	
 	//post a new event
 	@PostMapping
 	public ResponseEntity<?> createEvent(@RequestBody Event e) {
 		
-    ResponseEntity<Event> response = rt.postForEntity("http://18.216.173.254:9000/gateway/events", e, Event.class);
+    ResponseEntity<Event> response = rt.postForEntity("http://localhost:9000/gateway/events", e, Event.class);
 		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(response.getBody().getId()).toUri();
 
 		return ResponseEntity.created(location).build();
@@ -51,7 +51,7 @@ public class EventsClientGateway {
 	@PutMapping("/{id}")
 	public ResponseEntity<?> updateEventById(@RequestBody Event e, @PathVariable String id) {
 
-		rt.put("http://18.216.173.254:9000/gateway/events/" + id, e);
+		rt.put("http://localhost:9000/gateway/events/" + id, e);
 		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(e.getId()).toUri();
 
 		return ResponseEntity.created(location).build();
@@ -60,7 +60,7 @@ public class EventsClientGateway {
 	@DeleteMapping("/{id}")
 	public ResponseEntity<?> deleteById(@PathVariable String id){
 		
-		rt.delete("http://18.216.173.254:9000/gateway/events/" + id);
+		rt.delete("http://localhost:9000/gateway/events/" + id);
 
 		return ResponseEntity.ok().build();
 	}
