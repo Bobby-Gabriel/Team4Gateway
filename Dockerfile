@@ -1,10 +1,3 @@
-#Build gradle stage
-
-FROM gradle:6.6.1 AS BUILD
-WORKDIR /usr/app/
-COPY . .
-RUN gradle clean build
-
 #Package stage
 
 FROM eclipse-temurin:17-jdk-alpine
