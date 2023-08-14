@@ -2,11 +2,6 @@ pipeline {
     agent any
 
     stages {
-        stage('Pull From Github'){
-            steps{
-                git branch: 'develop', url: "https://github.com/Bobby-Gabriel/Team4Gateway.git"
-            }
-        }
         stage('Docker Build/Package'){
             steps{
                 sh '''docker build -t bobbygabriel3510/team4project-gateway:latest .'''
